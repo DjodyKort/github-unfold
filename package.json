@@ -45,7 +45,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "happy-dom": "^20.11.0",
     "prettier": "^3.9.6",
-    "typescript": "^5.9.3",
+    "typescript": "^7.0.2",
     "typescript-eslint": "^8.65.0",
     "vitest": "^4.1.10",
     "wxt": "^0.20.27"
