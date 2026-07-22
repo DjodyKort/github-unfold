@@ -37,7 +37,7 @@ jobs:
       - run: npm run test:coverage
       - name: Upload coverage
         if: matrix.node == 22
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: coverage
           path: coverage/
@@ -57,7 +57,7 @@ jobs:
       - run: npm run zip
       - run: npm run zip -- -b firefox
       - name: Upload packaged extensions
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: extension-zips
           path: .output/*.zip
