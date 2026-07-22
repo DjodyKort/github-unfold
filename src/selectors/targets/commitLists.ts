@@ -28,7 +28,9 @@ export const commitListsTarget: Target = {
     );
     if (toggle) realClick(toggle);
   },
-  driftHeuristic(root) {
-    return root.querySelector('.TimelineItem--condensed') ? true : null;
+  // A condensed group can persist after expansion, so its presence isn't a
+  // false-positive-free drift signal; the sentinel covers this target.
+  driftHeuristic() {
+    return null;
   },
 };

@@ -1,5 +1,5 @@
 import type { Target } from '../types';
-import { pageContainsText, realClick } from '../helpers';
+import { hasControlLabelled, realClick } from '../helpers';
 
 /**
  * "N hidden items" / "Load more…" pagination batches.
@@ -46,10 +46,7 @@ export const hiddenItemsPrTarget: Target = {
     }
   },
   driftHeuristic(root) {
-    if (pageContainsText(root, ['hidden item', 'Load more'])) {
-      return root.querySelector('.ajax-pagination-btn') ? true : null;
-    }
-    return null;
+    return hasControlLabelled(root, /(load more|hidden item)/i) ? true : null;
   },
 };
 
@@ -74,9 +71,6 @@ export const hiddenItemsIssueTarget: Target = {
     realClick(el);
   },
   driftHeuristic(root) {
-    if (pageContainsText(root, ['hidden item', 'Load more'])) {
-      return root.querySelector('[class*="LoadMore-module"]') ? true : null;
-    }
-    return null;
+    return hasControlLabelled(root, /(load more|hidden item)/i) ? true : null;
   },
 };

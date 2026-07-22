@@ -7,5 +7,6 @@ stats.html
 .DS_Store
 test-results
 playwright-report
+.sentinel
 .env
 .env.*

@@ -1,5 +1,5 @@
 import type { Target } from '../types';
-import { pageContainsText, realClick } from '../helpers';
+import { hasControlLabelled, realClick } from '../helpers';
 
 /**
  * A resolved/outdated review thread on a classic PR page.
@@ -54,9 +54,10 @@ export const resolvedThreadsTarget: Target = {
   isExpanded: isOpen,
   expand: open,
   driftHeuristic(root) {
-    if (findThreads(root).length > 0) return true;
-    if (pageContainsText(root, ['Show resolved', 'Hide resolved'])) return true;
-    return null;
+    // A visible "Show resolved" control means a collapsed thread is present; if
+    // find() returned nothing for it, our element selector has drifted. The
+    // control disappears once expanded, so this doesn't fire on success.
+    return hasControlLabelled(root, /^show resolved$/i) ? true : null;
   },
 };
 
@@ -76,10 +77,10 @@ export const outdatedThreadsTarget: Target = {
   },
   isExpanded: isOpen,
   expand: open,
-  driftHeuristic(root) {
-    if (pageContainsText(root, ['Outdated'])) {
-      return findThreads(root).length > 0 ? true : null;
-    }
+  // Outdated threads share the resolved element and "Show resolved" control;
+  // there is no independent, false-positive-free in-page signal, so drift for
+  // this target is covered authoritatively by the sentinel's curated pages.
+  driftHeuristic() {
     return null;
   },
 };

@@ -1,12 +1,5 @@
 /** Shared low-level DOM helpers for selector targets. */
 
-/** Case-insensitive test for whether `root` contains any of the given phrases. */
-export function pageContainsText(root: ParentNode, phrases: string[]): boolean {
-  const host = (root as Element).textContent ?? (root as Document).body?.textContent ?? '';
-  const hay = host.toLowerCase();
-  return phrases.some((p) => hay.includes(p.toLowerCase()));
-}
-
 /** The accessible label text a `button[aria-labelledby]` points at, if any. */
 export function labelledbyText(el: Element): string | null {
   const id = el.getAttribute('aria-labelledby');
@@ -21,4 +14,32 @@ export function realClick(el: Element): void {
   (el as HTMLElement).dispatchEvent(
     new MouseEvent('click', { bubbles: true, cancelable: true, view: el.ownerDocument.defaultView }),
   );
+}
+
+/**
+ * Best-effort visibility check. Uses `hidden`/inline `display:none` up the tree,
+ * which is deterministic in both real browsers and the test DOM (unlike layout,
+ * which the test DOM doesn't compute).
+ */
+export function isProbablyVisible(el: Element): boolean {
+  let node: Element | null = el;
+  while (node) {
+    if (node.hasAttribute('hidden')) return false;
+    const style = (node as HTMLElement).style;
+    if (style && style.display === 'none') return false;
+    node = node.parentElement;
+  }
+  return true;
+}
+
+/**
+ * True if a visible `<button>`/`<summary>` whose accessible text matches `re`
+ * exists — a stable secondary anchor for drift detection, independent of the
+ * fragile class our `find()` relies on.
+ */
+export function hasControlLabelled(root: ParentNode, re: RegExp): boolean {
+  return Array.from(root.querySelectorAll('button, summary')).some((el) => {
+    if (!isProbablyVisible(el)) return false;
+    return re.test((el.textContent ?? '').trim());
+  });
 }

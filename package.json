@@ -20,7 +20,8 @@
     "compile": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "recon": "playwright test recon",
+    "build:probe": "node scripts/build-probe.mjs",
+    "sentinel": "npm run build:probe && playwright test",
     "postinstall": "wxt prepare"
   },
   "devDependencies": {
@@ -28,6 +29,7 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@wxt-dev/module-react": "^1.2.2",
+    "esbuild": "^0.28.1",
     "happy-dom": "^20.11.0",
     "typescript": "^7.0.2",
     "vitest": "^4.1.10",

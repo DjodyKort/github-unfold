@@ -1,5 +1,5 @@
 import type { Target } from '../types';
-import { labelledbyText, pageContainsText, realClick } from '../helpers';
+import { labelledbyText, realClick } from '../helpers';
 
 /**
  * A comment minimized as off-topic / spam / abuse / duplicate / outdated.
@@ -39,10 +39,9 @@ export const minimizedCommentsIssueTarget: Target = {
   expand(el) {
     realClick(el);
   },
-  driftHeuristic(root) {
-    if (pageContainsText(root, ['marked this as', 'hidden', 'minimized'])) {
-      return unfoldButtons(root).length > 0 ? true : null;
-    }
+  // The "show comment" unfold button is exactly what find() targets, so there
+  // is no independent in-page anchor; drift is covered by the sentinel.
+  driftHeuristic() {
     return null;
   },
 };
@@ -65,10 +64,7 @@ export const minimizedCommentsPrTarget: Target = {
     const toggle = el.querySelector('.octicon-unfold, .js-comment-hide-minimize-form button, summary');
     if (toggle) realClick(toggle);
   },
-  driftHeuristic(root) {
-    if (root.querySelector('.js-minimizable-comment-group')) {
-      return !!root.querySelector('.js-minimizable-comment-group.minimized-comment');
-    }
+  driftHeuristic() {
     return null;
   },
 };
