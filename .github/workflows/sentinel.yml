@@ -25,8 +25,8 @@ jobs:
     outputs:
       drift: ${{ steps.run.outputs.drift }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -46,7 +46,7 @@ jobs:
           fi
       - name: Upload drift artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: drift-report
           path: .sentinel/
@@ -57,10 +57,10 @@ jobs:
     if: needs.sentinel.outputs.drift == 'true' || inputs.force_heal
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm

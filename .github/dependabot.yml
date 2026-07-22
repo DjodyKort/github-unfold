@@ -8,6 +8,10 @@ updates:
       dev-dependencies:
         dependency-type: development
     open-pull-requests-limit: 5
+    ignore:
+      # TypeScript 7 (native preview) is unsupported by typescript-eslint; stay on 5.x.
+      - dependency-name: typescript
+        versions: ['>=6']
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
