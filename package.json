@@ -1,0 +1,40 @@
+{
+  "name": "github-unfold",
+  "version": "0.1.0",
+  "description": "Zero-click, self-healing expander for collapsed GitHub PR/issue comments and conversations.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "author": "Djody Kort",
+  "homepage": "https://github.com/DjodyKort/github-unfold",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DjodyKort/github-unfold.git"
+  },
+  "scripts": {
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "compile": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "recon": "playwright test recon",
+    "postinstall": "wxt prepare"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@wxt-dev/module-react": "^1.2.2",
+    "happy-dom": "^20.11.0",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10",
+    "wxt": "^0.20.27"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  }
+}
