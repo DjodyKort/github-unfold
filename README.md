@@ -1,5 +1,10 @@
 # GitHub Unfold
 
+[![CI](https://github.com/DjodyKort/github-unfold/actions/workflows/ci.yml/badge.svg)](https://github.com/DjodyKort/github-unfold/actions/workflows/ci.yml)
+[![Sentinel](https://github.com/DjodyKort/github-unfold/actions/workflows/sentinel.yml/badge.svg)](https://github.com/DjodyKort/github-unfold/actions/workflows/sentinel.yml)
+[![CodeQL](https://github.com/DjodyKort/github-unfold/actions/workflows/codeql.yml/badge.svg)](https://github.com/DjodyKort/github-unfold/actions/workflows/codeql.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+
 Zero-click expander for the stuff GitHub hides on pull requests and issues —
 **resolved & outdated review threads**, **minimized/hidden comments**, and
 **"N hidden items / Load more"** batches — with **live drift detection** and an
@@ -16,7 +21,15 @@ Zero-click expander for the stuff GitHub hides on pull requests and issues —
 Working end-to-end. Zero-click expansion is verified against live GitHub PRs, and
 the self-healing sentinel runs green daily. See the [roadmap](#roadmap).
 
-![Resolved conversations auto-expanded on a live PR](docs/assets/pr-expanded.png)
+The panel and live **Diagnostics**, sitting on a real PR:
+
+| Panel                                              | Diagnostics (live self-test)                    |
+| -------------------------------------------------- | ----------------------------------------------- |
+| ![Panel on a live PR](docs/assets/panel-on-pr.png) | ![Diagnostics tab](docs/assets/diagnostics.png) |
+
+| Dashboard (light)                                   | Dashboard (dark)                                  |
+| --------------------------------------------------- | ------------------------------------------------- |
+| ![Dashboard light](docs/assets/dashboard-light.png) | ![Dashboard dark](docs/assets/dashboard-dark.png) |
 
 ## Features
 
@@ -48,10 +61,19 @@ Then load `.output/chrome-mv3` via `chrome://extensions` → "Load unpacked".
 ## Development
 
 ```bash
-npm test           # unit tests (every selector vs a saved fixture)
 npm run compile    # type-check
-npm run build      # production build
+npm run lint       # ESLint
+npm run format     # Prettier
+npm test           # unit tests (every selector vs a saved fixture)
+npm run e2e:ci     # hermetic extension E2E (loads the real build, no live GitHub)
+npm run sentinel   # live drift check against real GitHub pages
+npm run build      # production build (chrome) / build:firefox for Firefox
 ```
+
+CI runs type-check, lint, format, a Node 20/22 test matrix with coverage, Chrome +
+Firefox builds, and the hermetic extension E2E on every PR. A daily
+[sentinel](#how-it-stays-alive-maintainability) checks live GitHub, and CodeQL +
+Dependabot keep dependencies and code secure.
 
 ## How it stays alive (maintainability)
 

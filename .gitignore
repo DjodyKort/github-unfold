@@ -10,3 +10,4 @@ playwright-report
 .sentinel
 .env
 .env.*
+coverage

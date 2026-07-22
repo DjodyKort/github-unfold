@@ -1,0 +1,10 @@
+node_modules
+.output
+.wxt
+.sentinel
+coverage
+public
+assets
+fixtures
+docs/assets
+package-lock.json

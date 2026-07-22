@@ -20,8 +20,12 @@
   place-items: center;
   margin-left: auto;
 }
-.gu-launcher:hover { border-color: var(--gu-accent); }
-.gu-launcher-drift { border-color: var(--gu-danger); }
+.gu-launcher:hover {
+  border-color: var(--gu-accent);
+}
+.gu-launcher-drift {
+  border-color: var(--gu-danger);
+}
 
 .gu-launcher-badge {
   position: absolute;
@@ -69,8 +73,15 @@
   align-items: center;
   margin-bottom: 10px;
 }
-.gu-panel-title { font-weight: 700; color: var(--gu-fg); }
-.gu-panel-actions { display: flex; gap: 6px; align-items: center; }
+.gu-panel-title {
+  font-weight: 700;
+  color: var(--gu-fg);
+}
+.gu-panel-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
 
 .gu-iconbtn {
   appearance: none;
@@ -82,4 +93,6 @@
   cursor: pointer;
   padding: 0 4px;
 }
-.gu-iconbtn:hover { color: var(--gu-fg); }
+.gu-iconbtn:hover {
+  color: var(--gu-fg);
+}

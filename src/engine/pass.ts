@@ -47,8 +47,7 @@ export async function runExpandPass(
       deps.actioned?.add(el);
 
       result.expanded += 1;
-      result.byCategory[target.category] =
-        (result.byCategory[target.category] ?? 0) + 1;
+      result.byCategory[target.category] = (result.byCategory[target.category] ?? 0) + 1;
     }
   }
 

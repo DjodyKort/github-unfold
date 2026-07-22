@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { loadFixture } from './fixtures';
-import { resolvedThreadsTarget, outdatedThreadsTarget } from '../src/selectors/targets/reviewThreads';
+import {
+  resolvedThreadsTarget,
+  outdatedThreadsTarget,
+} from '../src/selectors/targets/reviewThreads';
 import { minimizedCommentsIssueTarget } from '../src/selectors/targets/minimizedComments';
 import { hiddenItemsPrTarget, hiddenItemsIssueTarget } from '../src/selectors/targets/hiddenItems';
 import { commitListsTarget } from '../src/selectors/targets/commitLists';

@@ -13,9 +13,10 @@ export interface Settings {
 
 export const DEFAULT_SETTINGS: Settings = {
   autoExpand: true,
-  categories: Object.fromEntries(
-    CATEGORIES.map((c) => [c.id, c.defaultOn]),
-  ) as Record<CategoryId, boolean>,
+  categories: Object.fromEntries(CATEGORIES.map((c) => [c.id, c.defaultOn])) as Record<
+    CategoryId,
+    boolean
+  >,
   rateLimitMs: 400,
   maxPasses: 20,
 };

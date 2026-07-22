@@ -1,6 +1,9 @@
 import type { PageKind, Target } from './types';
 import { resolvedThreadsTarget, outdatedThreadsTarget } from './targets/reviewThreads';
-import { minimizedCommentsIssueTarget, minimizedCommentsPrTarget } from './targets/minimizedComments';
+import {
+  minimizedCommentsIssueTarget,
+  minimizedCommentsPrTarget,
+} from './targets/minimizedComments';
 import { hiddenItemsPrTarget, hiddenItemsIssueTarget } from './targets/hiddenItems';
 import { commitListsTarget } from './targets/commitLists';
 

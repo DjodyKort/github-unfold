@@ -57,7 +57,10 @@ for (const page of CURATED_PAGES) {
     for (const id of page.expect) {
       const report = byId.get(id);
       expect(report, `target ${id} not evaluated on ${page.url}`).toBeTruthy();
-      expect(report!.matched, `target ${id} found nothing on ${page.url} — selector likely broken`).toBeGreaterThan(0);
+      expect(
+        report!.matched,
+        `target ${id} found nothing on ${page.url} — selector likely broken`,
+      ).toBeGreaterThan(0);
     }
   });
 }

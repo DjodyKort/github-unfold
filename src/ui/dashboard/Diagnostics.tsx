@@ -34,8 +34,8 @@ export function Diagnostics({ data, onRerun }: Props) {
 
       {data.drift && (
         <div className="gu-alert" role="alert">
-          A selector that should match this page found nothing — it has probably
-          broken. The sentinel will open a fix.
+          A selector that should match this page found nothing — it has probably broken. The
+          sentinel will open a fix.
         </div>
       )}
 

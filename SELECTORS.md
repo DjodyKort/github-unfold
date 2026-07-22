@@ -12,16 +12,16 @@ GitHub renders two very different DOMs:
   regenerate per deploy — anchor only on `data-testid`, `data-component`, octicon SVG
   classes, or accessible text. **Never hardcode a `*-module__*__hash` class.**
 
-| Category | Page | Primary anchor | Expand action | Drift heuristic | Fixture |
-|---|---|---|---|---|---|
-| resolvedThreads | pr | `review-thread-collapsible[data-resolved="true"]` | set `.open = true` (2026 custom-element API) | any `review-thread-collapsible` present but 0 with resolved-and-closed | `resolvedThreads.pr.html` |
-| outdatedThreads | pr | `review-thread-collapsible` with an `Outdated` `.Label` | set `.open = true` | text "Show resolved"/"Outdated" present but 0 matches | (shares fixture) |
-| minimizedComments | issue | `button[data-component="IconButton"]` containing `.octicon-unfold`, labelled "show comment" | click the button | page text "marked this as"/"hidden" but 0 unfold buttons | `minimizedComments.issue.html` |
-| minimizedComments | pr | `.js-minimizable-comment-group.minimized-comment` → `.js-comment-hide-minimize-form` / `.octicon-unfold` toggle | click the show control | minimized-comment marker present, 0 matches | (classic — captured when a live minimized PR comment is available) |
-| hiddenItems | pr | `form.js-ajax-pagination` → `.ajax-pagination-btn` | submit the form (loop until gone) | "N hidden items"/"Load more" text present, 0 matches | `hiddenItems.pr.html` |
-| hiddenItems | issue | `[class*="LoadMore-module"]` button | click (loop until gone) | "Load more"/"hidden item" text present, 0 matches | `hiddenItems.issue.html` |
-| commitLists | pr | `.TimelineItem--condensed` collapsed commit group | click its expand control | condensed group present, 0 expandable | `commitLists.pr.html` |
-| oversizedDiffs | pr | `.js-diff-load button` / `load-diff-button` (**off by default**) | click | — | (deferred; opt-in) |
+| Category          | Page  | Primary anchor                                                                                                  | Expand action                                | Drift heuristic                                                        | Fixture                                                            |
+| ----------------- | ----- | --------------------------------------------------------------------------------------------------------------- | -------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| resolvedThreads   | pr    | `review-thread-collapsible[data-resolved="true"]`                                                               | set `.open = true` (2026 custom-element API) | any `review-thread-collapsible` present but 0 with resolved-and-closed | `resolvedThreads.pr.html`                                          |
+| outdatedThreads   | pr    | `review-thread-collapsible` with an `Outdated` `.Label`                                                         | set `.open = true`                           | text "Show resolved"/"Outdated" present but 0 matches                  | (shares fixture)                                                   |
+| minimizedComments | issue | `button[data-component="IconButton"]` containing `.octicon-unfold`, labelled "show comment"                     | click the button                             | page text "marked this as"/"hidden" but 0 unfold buttons               | `minimizedComments.issue.html`                                     |
+| minimizedComments | pr    | `.js-minimizable-comment-group.minimized-comment` → `.js-comment-hide-minimize-form` / `.octicon-unfold` toggle | click the show control                       | minimized-comment marker present, 0 matches                            | (classic — captured when a live minimized PR comment is available) |
+| hiddenItems       | pr    | `form.js-ajax-pagination` → `.ajax-pagination-btn`                                                              | submit the form (loop until gone)            | "N hidden items"/"Load more" text present, 0 matches                   | `hiddenItems.pr.html`                                              |
+| hiddenItems       | issue | `[class*="LoadMore-module"]` button                                                                             | click (loop until gone)                      | "Load more"/"hidden item" text present, 0 matches                      | `hiddenItems.issue.html`                                           |
+| commitLists       | pr    | `.TimelineItem--condensed` collapsed commit group                                                               | click its expand control                     | condensed group present, 0 expandable                                  | `commitLists.pr.html`                                              |
+| oversizedDiffs    | pr    | `.js-diff-load button` / `load-diff-button` (**off by default**)                                                | click                                        | —                                                                      | (deferred; opt-in)                                                 |
 
 ## Notes & gotchas
 

@@ -23,9 +23,7 @@ export const commitListsTarget: Target = {
     return !!details && details.hasAttribute('open');
   },
   expand(el) {
-    const toggle = el.querySelector(
-      '[aria-expanded="false"], .octicon-unfold, summary, button',
-    );
+    const toggle = el.querySelector('[aria-expanded="false"], .octicon-unfold, summary, button');
     if (toggle) realClick(toggle);
   },
   // A condensed group can persist after expansion, so its presence isn't a

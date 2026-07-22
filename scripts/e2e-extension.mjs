@@ -11,11 +11,7 @@ mkdirSync('docs/assets', { recursive: true });
 const ctx = await chromium.launchPersistentContext('', {
   // Old headless can't load extensions; the new headless mode can.
   headless: false,
-  args: [
-    '--headless=new',
-    `--disable-extensions-except=${EXT}`,
-    `--load-extension=${EXT}`,
-  ],
+  args: ['--headless=new', `--disable-extensions-except=${EXT}`, `--load-extension=${EXT}`],
 });
 
 const page = await ctx.newPage();
@@ -29,7 +25,8 @@ await page.goto(PR, { waitUntil: 'domcontentloaded' });
 const collapsedBefore = await page.evaluate(
   () =>
     Array.from(document.querySelectorAll('review-thread-collapsible[data-resolved="true"]')).filter(
-      (e) => e.querySelector('[data-target="review-thread-collapsible.body"]')?.hasAttribute('hidden'),
+      (e) =>
+        e.querySelector('[data-target="review-thread-collapsible.body"]')?.hasAttribute('hidden'),
     ).length,
 );
 
@@ -46,9 +43,7 @@ const openAfter = await page.evaluate(
     ).length,
 );
 
-const widgetPresent = await page.evaluate(
-  () => !!document.querySelector('github-unfold-ui'),
-);
+const widgetPresent = await page.evaluate(() => !!document.querySelector('github-unfold-ui'));
 
 await page.screenshot({ path: 'docs/assets/pr-expanded.png', fullPage: false });
 

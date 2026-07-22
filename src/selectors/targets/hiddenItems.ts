@@ -58,10 +58,13 @@ export const hiddenItemsIssueTarget: Target = {
   networkHeavy: true,
   sampleUrl: 'https://github.com/rust-lang/rust/issues/20041',
   find(root) {
-    const scoped = Array.from(root.querySelectorAll('[class*="LoadMore-module"] button, button[class*="LoadMore-module"]'));
+    const scoped = Array.from(
+      root.querySelectorAll('[class*="LoadMore-module"] button, button[class*="LoadMore-module"]'),
+    );
     if (scoped.length > 0) return scoped.filter((b) => !(b as HTMLButtonElement).disabled);
     return Array.from(root.querySelectorAll('button')).filter(
-      (b) => /load more|hidden item/i.test(b.textContent ?? '') && !(b as HTMLButtonElement).disabled,
+      (b) =>
+        /load more|hidden item/i.test(b.textContent ?? '') && !(b as HTMLButtonElement).disabled,
     );
   },
   isExpanded() {

@@ -28,7 +28,11 @@ describe('runExpandPass', () => {
   it('respects a disabled category toggle', async () => {
     const root = loadFixture('resolvedThreads.pr.html');
     const s = settings({
-      categories: { ...DEFAULT_SETTINGS.categories, resolvedThreads: false, outdatedThreads: false },
+      categories: {
+        ...DEFAULT_SETTINGS.categories,
+        resolvedThreads: false,
+        outdatedThreads: false,
+      },
     });
     const result = await runExpandPass(root, s, 'pr');
     expect(result.byCategory.resolvedThreads ?? 0).toBe(0);
@@ -38,10 +42,14 @@ describe('runExpandPass', () => {
     const root = loadFixture('hiddenItems.pr.html');
     let clock = 0;
     let waited = 0;
-    const rl = new RateLimiter(400, () => clock, async (ms) => {
-      waited += 1;
-      clock += ms;
-    });
+    const rl = new RateLimiter(
+      400,
+      () => clock,
+      async (ms) => {
+        waited += 1;
+        clock += ms;
+      },
+    );
     const result = await runExpandPass(root, settings(), 'pr', { rateLimiter: rl });
     expect(result.byCategory.hiddenItems).toBeGreaterThan(0);
     // First network-heavy action does not sleep; the limiter is still consulted.

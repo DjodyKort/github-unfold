@@ -26,7 +26,9 @@
   gap: 6px;
 }
 
-.gu-tab:hover { color: var(--gu-fg); }
+.gu-tab:hover {
+  color: var(--gu-fg);
+}
 
 .gu-tab-active {
   color: var(--gu-fg);
@@ -50,19 +52,35 @@
   cursor: pointer;
 }
 
-.gu-row input { margin-top: 2px; }
-.gu-row span { display: flex; flex-direction: column; }
-.gu-row small { color: var(--gu-fg-muted); font-size: 11px; }
+.gu-row input {
+  margin-top: 2px;
+}
+.gu-row span {
+  display: flex;
+  flex-direction: column;
+}
+.gu-row small {
+  color: var(--gu-fg-muted);
+  font-size: 11px;
+}
 
-.gu-master strong { font-size: 13px; }
-.gu-divider { height: 1px; background: var(--gu-border); margin: 8px 0; }
+.gu-master strong {
+  font-size: 13px;
+}
+.gu-divider {
+  height: 1px;
+  background: var(--gu-border);
+  margin: 8px 0;
+}
 
 .gu-categories {
   border: none;
   margin: 0;
   padding: 0;
 }
-.gu-categories:disabled { opacity: 0.45; }
+.gu-categories:disabled {
+  opacity: 0.45;
+}
 
 .gu-btn {
   appearance: none;
@@ -74,9 +92,13 @@
   font: inherit;
   cursor: pointer;
 }
-.gu-btn:hover { border-color: var(--gu-accent); }
+.gu-btn:hover {
+  border-color: var(--gu-accent);
+}
 
-.gu-muted { color: var(--gu-fg-muted); }
+.gu-muted {
+  color: var(--gu-fg-muted);
+}
 
 .gu-diag-head {
   display: flex;
@@ -113,7 +135,11 @@
   padding: 6px;
   border-bottom: 1px solid var(--gu-border);
 }
-.gu-num, td.gu-num { text-align: right; font-variant-numeric: tabular-nums; }
+.gu-num,
+td.gu-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
 
 .gu-badge {
   font-size: 10px;
@@ -122,13 +148,28 @@
   border-radius: 20px;
   letter-spacing: 0.03em;
 }
-.gu-badge-ok { background: color-mix(in srgb, var(--gu-ok) 18%, transparent); color: var(--gu-ok); }
-.gu-badge-drift { background: color-mix(in srgb, var(--gu-danger) 18%, transparent); color: var(--gu-danger); }
-.gu-badge-absent { background: var(--gu-bg-subtle); color: var(--gu-fg-muted); }
+.gu-badge-ok {
+  background: color-mix(in srgb, var(--gu-ok) 18%, transparent);
+  color: var(--gu-ok);
+}
+.gu-badge-drift {
+  background: color-mix(in srgb, var(--gu-danger) 18%, transparent);
+  color: var(--gu-danger);
+}
+.gu-badge-absent {
+  background: var(--gu-bg-subtle);
+  color: var(--gu-fg-muted);
+}
 
-.gu-status-drift td { background: color-mix(in srgb, var(--gu-danger) 7%, transparent); }
+.gu-status-drift td {
+  background: color-mix(in srgb, var(--gu-danger) 7%, transparent);
+}
 
-.gu-stat-tiles { display: flex; gap: 10px; margin-bottom: 12px; }
+.gu-stat-tiles {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
 .gu-tile {
   flex: 1;
   background: var(--gu-bg-subtle);
@@ -139,10 +180,18 @@
   flex-direction: column;
   gap: 2px;
 }
-.gu-tile-num { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
-.gu-tile-label { font-size: 11px; color: var(--gu-fg-muted); }
+.gu-tile-num {
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.gu-tile-label {
+  font-size: 11px;
+  color: var(--gu-fg-muted);
+}
 
-.gu-kbd, kbd.gu-kbd {
+.gu-kbd,
+kbd.gu-kbd {
   font-family: ui-monospace, SFMono-Regular, monospace;
   font-size: 11px;
   background: var(--gu-bg-subtle);
@@ -151,6 +200,12 @@
   padding: 2px 6px;
 }
 
-.gu-steps { padding-left: 18px; }
-.gu-steps li { margin: 6px 0; }
-.gu-onboarding p { margin-top: 0; }
+.gu-steps {
+  padding-left: 18px;
+}
+.gu-steps li {
+  margin: 6px 0;
+}
+.gu-onboarding p {
+  margin-top: 0;
+}

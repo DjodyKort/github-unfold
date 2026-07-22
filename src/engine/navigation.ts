@@ -23,12 +23,18 @@ export function onNavigate(cb: () => void, target: Window = window): () => void 
   const origPush = history.pushState;
   const origReplace = history.replaceState;
 
-  history.pushState = function patchedPush(this: History, ...args: Parameters<History['pushState']>) {
+  history.pushState = function patchedPush(
+    this: History,
+    ...args: Parameters<History['pushState']>
+  ) {
     const r = origPush.apply(this, args);
     cb();
     return r;
   };
-  history.replaceState = function patchedReplace(this: History, ...args: Parameters<History['replaceState']>) {
+  history.replaceState = function patchedReplace(
+    this: History,
+    ...args: Parameters<History['replaceState']>
+  ) {
     const r = origReplace.apply(this, args);
     cb();
     return r;

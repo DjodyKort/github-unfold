@@ -12,7 +12,11 @@ export function labelledbyText(el: Element): string | null {
 /** Dispatch a trusted-like click that Catalyst / React both honor. */
 export function realClick(el: Element): void {
   (el as HTMLElement).dispatchEvent(
-    new MouseEvent('click', { bubbles: true, cancelable: true, view: el.ownerDocument.defaultView }),
+    new MouseEvent('click', {
+      bubbles: true,
+      cancelable: true,
+      view: el.ownerDocument.defaultView,
+    }),
   );
 }
 
@@ -22,6 +26,15 @@ export function realClick(el: Element): void {
  * which the test DOM doesn't compute).
  */
 export function isProbablyVisible(el: Element): boolean {
+  // In a real browser, `checkVisibility` accounts for CSS-class-based hiding
+  // (e.g. GitHub hides the "Show resolved" button via a class once a thread is
+  // expanded) — essential to avoid a false drift signal after auto-expansion.
+  const withCheck = el as Element & { checkVisibility?: () => boolean };
+  if (typeof withCheck.checkVisibility === 'function') {
+    return withCheck.checkVisibility();
+  }
+  // Fallback for the test DOM, which computes no layout: inspect `hidden` and
+  // inline `display:none` up the tree.
   let node: Element | null = el;
   while (node) {
     if (node.hasAttribute('hidden')) return false;

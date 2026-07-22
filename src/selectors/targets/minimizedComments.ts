@@ -18,7 +18,10 @@ function unfoldButtons(root: ParentNode): Element[] {
     // Exclude the review-thread "Show resolved" button, which shares the icon.
     if (b.closest('review-thread-collapsible')) return false;
     const label = labelledbyText(b) ?? b.textContent ?? '';
-    return /show comment|show minimized|unminimize|show/i.test(label) || b.getAttribute('data-component') === 'IconButton';
+    return (
+      /show comment|show minimized|unminimize|show/i.test(label) ||
+      b.getAttribute('data-component') === 'IconButton'
+    );
   });
 }
 
@@ -61,7 +64,9 @@ export const minimizedCommentsPrTarget: Target = {
     return !el.classList.contains('minimized-comment');
   },
   expand(el) {
-    const toggle = el.querySelector('.octicon-unfold, .js-comment-hide-minimize-form button, summary');
+    const toggle = el.querySelector(
+      '.octicon-unfold, .js-comment-hide-minimize-form button, summary',
+    );
     if (toggle) realClick(toggle);
   },
   driftHeuristic() {

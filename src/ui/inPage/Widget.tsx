@@ -4,14 +4,15 @@ import { runDiagnostics, type Diagnostics as DiagnosticsData } from '../../diagn
 import { Dashboard } from '../dashboard/Dashboard';
 import { DEFAULT_SETTINGS } from '../../settings/defaults';
 
+/** Window event the content script dispatches to toggle the panel (keyboard shortcut). */
+export const TOGGLE_EVENT = 'gu:toggle-panel';
+
 interface Props {
   /** Fires when the user asks to expand everything now. */
   onExpandNow: () => void;
-  /** External open/close signal (e.g. keyboard shortcut). */
-  openSignal?: number;
 }
 
-export function Widget({ onExpandNow, openSignal }: Props) {
+export function Widget({ onExpandNow }: Props) {
   const [settings, setSettings] = useSettings();
   const stats = useStats();
   const [open, setOpen] = useState(false);
@@ -19,16 +20,18 @@ export function Widget({ onExpandNow, openSignal }: Props) {
 
   const refresh = useCallback(() => setDiag(runDiagnostics()), []);
 
-  // Refresh diagnostics whenever the panel opens.
-  useEffect(() => {
-    if (open) refresh();
-  }, [open, refresh]);
+  const toggle = useCallback(() => {
+    setOpen((o) => !o);
+    refresh();
+  }, [refresh]);
 
-  // Respond to the external toggle signal.
+  // Subscribe to the external toggle signal (setState happens in the callback,
+  // not synchronously in the effect body).
   useEffect(() => {
-    if (openSignal !== undefined) setOpen((o) => !o);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openSignal]);
+    const handler = () => toggle();
+    window.addEventListener(TOGGLE_EVENT, handler);
+    return () => window.removeEventListener(TOGGLE_EVENT, handler);
+  }, [toggle]);
 
   const drift = diag.drift;
 
@@ -39,8 +42,12 @@ export function Widget({ onExpandNow, openSignal }: Props) {
           <header className="gu-panel-head">
             <span className="gu-panel-title">GitHub Unfold</span>
             <div className="gu-panel-actions">
-              <button className="gu-btn" onClick={onExpandNow}>Expand now</button>
-              <button className="gu-iconbtn" aria-label="Close" onClick={() => setOpen(false)}>×</button>
+              <button className="gu-btn" onClick={onExpandNow}>
+                Expand now
+              </button>
+              <button className="gu-iconbtn" aria-label="Close" onClick={() => setOpen(false)}>
+                ×
+              </button>
             </div>
           </header>
           <Dashboard
@@ -55,7 +62,7 @@ export function Widget({ onExpandNow, openSignal }: Props) {
 
       <button
         className={`gu-launcher ${drift ? 'gu-launcher-drift' : ''}`}
-        onClick={() => setOpen((o) => !o)}
+        onClick={toggle}
         aria-label={drift ? 'GitHub Unfold — selector drift detected' : 'GitHub Unfold'}
         title={drift ? 'A selector has broken — click for diagnostics' : 'GitHub Unfold'}
       >
