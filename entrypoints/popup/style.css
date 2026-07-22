@@ -14,7 +14,7 @@ body {
 }
 
 .gu-popup {
-  padding: 12px 14px;
+  padding: 14px 16px;
 }
 
 .gu-popup h1 {
@@ -27,3 +27,24 @@ body {
   margin: 0;
   color: #59636e;
 }
+
+.gu-popup-toggle {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+.gu-popup-stat {
+  margin-top: 12px !important;
+}
+
+.gu-popup-link {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 12px;
+  color: #0969da;
+  text-decoration: none;
+}
+.gu-popup-link:hover { text-decoration: underline; }

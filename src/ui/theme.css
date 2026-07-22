@@ -1,14 +1,8 @@
-/**
- * Design tokens for the extension UI (popup, options, in-page dashboard).
- *
- * Values mirror GitHub Primer so the UI feels native, and adapt to light/dark
- * via `prefers-color-scheme` plus GitHub's own `[data-color-mode]` attribute.
- * The rich dashboard (Phase 3) consumes these; kept here so there is one place
- * to restyle everything.
- */
-export const THEME_CSS = `
-:host, :root {
-  --gu-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+/* Design tokens, mirroring GitHub Primer. Adapts to light/dark via the OS
+   preference and GitHub's explicit [data-color-mode] attribute. */
+:host,
+:root {
+  --gu-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
   --gu-radius: 8px;
   --gu-space: 8px;
 
@@ -24,7 +18,8 @@ export const THEME_CSS = `
 }
 
 @media (prefers-color-scheme: dark) {
-  :host, :root {
+  :host,
+  :root {
     --gu-bg: #0d1117;
     --gu-bg-subtle: #161b22;
     --gu-fg: #e6edf3;
@@ -38,7 +33,7 @@ export const THEME_CSS = `
 }
 
 /* GitHub's explicit theme toggle wins over the OS preference. */
-:root[data-color-mode="dark"], [data-color-mode="dark"] :host {
+[data-color-mode='dark'] :host {
   --gu-bg: #0d1117;
   --gu-bg-subtle: #161b22;
   --gu-fg: #e6edf3;
@@ -49,4 +44,3 @@ export const THEME_CSS = `
   --gu-warn: #d29922;
   --gu-danger: #f85149;
 }
-`;

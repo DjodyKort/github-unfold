@@ -1,0 +1,85 @@
+.gu-widget {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2147483000;
+  font-family: var(--gu-font);
+}
+
+.gu-launcher {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--gu-border);
+  background: var(--gu-bg);
+  color: var(--gu-fg);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  margin-left: auto;
+}
+.gu-launcher:hover { border-color: var(--gu-accent); }
+.gu-launcher-drift { border-color: var(--gu-danger); }
+
+.gu-launcher-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gu-danger);
+  border: 2px solid var(--gu-bg);
+}
+
+.gu-launcher-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: var(--gu-accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--gu-bg);
+}
+
+.gu-panel {
+  width: 340px;
+  max-height: 70vh;
+  overflow: auto;
+  margin-bottom: 10px;
+  background: var(--gu-bg);
+  border: 1px solid var(--gu-border);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22);
+  padding: 14px;
+}
+
+.gu-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.gu-panel-title { font-weight: 700; color: var(--gu-fg); }
+.gu-panel-actions { display: flex; gap: 6px; align-items: center; }
+
+.gu-iconbtn {
+  appearance: none;
+  border: none;
+  background: none;
+  color: var(--gu-fg-muted);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+}
+.gu-iconbtn:hover { color: var(--gu-fg); }
