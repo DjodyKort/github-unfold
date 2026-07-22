@@ -13,7 +13,10 @@ Zero-click expander for the stuff GitHub hides on pull requests and issues —
 
 ## Status
 
-Early development. See the [phased plan](#roadmap).
+Working end-to-end. Zero-click expansion is verified against live GitHub PRs, and
+the self-healing sentinel runs green daily. See the [roadmap](#roadmap).
+
+![Resolved conversations auto-expanded on a live PR](docs/assets/pr-expanded.png)
 
 ## Features
 
@@ -61,12 +64,12 @@ sentinel triggers an AI fix PR. See [`MAINTENANCE.md`](./MAINTENANCE.md).
 ## Roadmap
 
 - [x] Phase 0 — Scaffold & foundation
-- [ ] Phase 1 — Playwright recon → selector registry + fixtures
-- [ ] Phase 2 — Core engine + expanders + unit tests
-- [ ] Phase 3 — Rich dashboard UI + diagnostics
-- [ ] Phase 4 — Self-healing pipeline
-- [ ] Phase 5 — Polish, packaging, docs
-- [ ] Phase 6 — E2E verification
+- [x] Phase 1 — Playwright recon → selector registry + fixtures
+- [x] Phase 2 — Core engine + expanders + unit tests
+- [x] Phase 3 — Rich dashboard UI + diagnostics
+- [x] Phase 4 — Self-healing pipeline
+- [x] Phase 5 — Polish, packaging, docs
+- [x] Phase 6 — E2E verification
 
 ## License
 

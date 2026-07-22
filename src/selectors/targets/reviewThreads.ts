@@ -19,24 +19,32 @@ function findThreads(root: ParentNode): Element[] {
   return Array.from(root.querySelectorAll('review-thread-collapsible'));
 }
 
+function bodyOf(el: Element): Element | null {
+  return el.querySelector('[data-target="review-thread-collapsible.body"]');
+}
+
 function isOpen(el: Element): boolean {
-  const c = el as CollapsibleEl;
-  if (typeof c.open === 'boolean') return c.open;
-  // Fixture / no-upgrade fallback: the show button is hidden once expanded.
-  const body = el.querySelector('[data-target="review-thread-collapsible.body"]');
-  return !!body && !body.hasAttribute('hidden');
+  // Actual DOM state: the body loses its `hidden` attribute once expanded. This
+  // is reliable regardless of whether the custom element reflects an `.open`
+  // property.
+  const body = bodyOf(el);
+  if (body) return !body.hasAttribute('hidden');
+  return (el as CollapsibleEl).open === true;
 }
 
 function open(el: Element): void {
-  const c = el as CollapsibleEl;
-  if (typeof c.open === 'boolean') {
-    c.open = true;
-    return;
-  }
+  // Click the toggle the way a user would — the Catalyst controller wired to
+  // `click:review-thread-collapsible#toggle` is what actually reveals (and
+  // lazily fetches) the thread body. Setting `.open` does not invoke it.
   const toggle = el.querySelector(
     '.review-thread-show-text, [data-action*="review-thread-collapsible#toggle"]',
   );
-  if (toggle) realClick(toggle);
+  if (toggle) {
+    realClick(toggle);
+    return;
+  }
+  const c = el as CollapsibleEl;
+  if (typeof c.open === 'boolean') c.open = true;
 }
 
 export const resolvedThreadsTarget: Target = {

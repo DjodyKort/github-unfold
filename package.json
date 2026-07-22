@@ -22,6 +22,8 @@
     "test:watch": "vitest",
     "build:probe": "node scripts/build-probe.mjs",
     "sentinel": "npm run build:probe && playwright test",
+    "icons": "node scripts/render-icons.mjs",
+    "e2e": "npm run build && node scripts/e2e-extension.mjs",
     "postinstall": "wxt prepare"
   },
   "devDependencies": {
