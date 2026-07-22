@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GitHub Unfold — auto-expand what GitHub hides</title>
+    <meta
+      name="description"
+      content="Zero-click browser extension that auto-expands resolved conversations, hidden comments and Load-more batches on GitHub PRs and issues — with a self-healing selector pipeline."
+    />
+    <link rel="icon" href="assets/icon-128.png" />
+    <style>
+      :root {
+        --bg: #ffffff;
+        --bg-alt: #f6f8fa;
+        --fg: #1f2328;
+        --muted: #59636e;
+        --border: #d1d9e0;
+        --accent: #0969da;
+        --ok: #1a7f37;
+        --danger: #cf222e;
+        --radius: 14px;
+        --font:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0d1117;
+          --bg-alt: #161b22;
+          --fg: #e6edf3;
+          --muted: #9198a1;
+          --border: #3d444d;
+          --accent: #4493f8;
+          --ok: #3fb950;
+          --danger: #f85149;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--fg);
+        line-height: 1.6;
+      }
+      a {
+        color: var(--accent);
+      }
+      .wrap {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      header.hero {
+        text-align: center;
+        padding: 72px 20px 48px;
+        background: radial-gradient(
+          1200px 400px at 50% -10%,
+          color-mix(in srgb, var(--accent) 14%, transparent),
+          transparent
+        );
+      }
+      .logo {
+        width: 72px;
+        height: 72px;
+        border-radius: 18px;
+        box-shadow: 0 8px 30px rgba(9, 105, 218, 0.25);
+      }
+      h1 {
+        font-size: 44px;
+        margin: 18px 0 8px;
+        letter-spacing: -0.02em;
+      }
+      .tag {
+        font-size: 19px;
+        color: var(--muted);
+        max-width: 620px;
+        margin: 0 auto 26px;
+      }
+      .cta {
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        background: var(--accent);
+        color: #fff;
+        text-decoration: none;
+        padding: 11px 20px;
+        border-radius: 10px;
+        font-weight: 600;
+      }
+      .cta.secondary {
+        background: transparent;
+        color: var(--fg);
+        border: 1px solid var(--border);
+      }
+      .ctas {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .shot {
+        width: 100%;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        margin: 12px 0;
+      }
+      .demo {
+        max-width: 820px;
+        margin: 34px auto 0;
+      }
+      section {
+        padding: 48px 0;
+        border-top: 1px solid var(--border);
+      }
+      h2 {
+        font-size: 27px;
+        letter-spacing: -0.01em;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 16px;
+      }
+      .card {
+        background: var(--bg-alt);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 18px;
+      }
+      .card h3 {
+        margin: 0 0 6px;
+        font-size: 16px;
+      }
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border);
+      }
+      th {
+        color: var(--muted);
+        font-weight: 600;
+      }
+      .yes {
+        color: var(--ok);
+        font-weight: 700;
+      }
+      .no {
+        color: var(--danger);
+        font-weight: 700;
+      }
+      .two {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      @media (max-width: 680px) {
+        .two {
+          grid-template-columns: 1fr;
+        }
+        h1 {
+          font-size: 34px;
+        }
+      }
+      pre {
+        background: var(--bg-alt);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 14px;
+        overflow: auto;
+        font-size: 13px;
+      }
+      footer {
+        text-align: center;
+        color: var(--muted);
+        padding: 40px 20px 60px;
+        border-top: 1px solid var(--border);
+        font-size: 14px;
+      }
+      .pill {
+        display: inline-block;
+        font-size: 12px;
+        color: var(--ok);
+        background: color-mix(in srgb, var(--ok) 15%, transparent);
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="wrap">
+        <img class="logo" src="assets/icon-128.png" alt="GitHub Unfold" />
+        <h1>GitHub Unfold</h1>
+        <p class="tag">
+          Zero-click. GitHub hides resolved conversations, minimized comments and "N hidden items"
+          behind clicks — this opens all of it automatically, the moment a PR or issue loads.
+        </p>
+        <div class="ctas">
+          <a class="cta" href="https://github.com/DjodyKort/github-unfold">Get it on GitHub →</a>
+          <a class="cta secondary" href="#how">How it stays alive</a>
+        </div>
+        <div class="demo">
+          <img class="shot" src="assets/demo.gif" alt="Auto-expanding a live PR" />
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <div class="wrap">
+        <h2>Everything GitHub folds away, unfolded</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Resolved &amp; outdated threads</h3>
+            <p>
+              Opens review conversations behind "Show resolved" — using the correct 2026
+              custom-element, the fix other tools missed.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Hidden comments</h3>
+            <p>
+              Unfolds comments minimized as off-topic, spam, abuse, duplicate or outdated — classic
+              and the React Issue Viewer.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Hidden items &amp; Load more</h3>
+            <p>
+              Loads the "N hidden items" and "Load more" batches in long threads, politely
+              rate-limited.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Commit lists</h3>
+            <p>
+              Expands collapsed commit groups in the timeline. All categories individually
+              toggleable.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>Why it exists</h2>
+        <table>
+          <tr>
+            <th></th>
+            <th>Zero-click</th>
+            <th>Resolved threads (2026)</th>
+            <th>Hidden comments</th>
+          </tr>
+          <tr>
+            <td><strong>GitHub Unfold</strong></td>
+            <td class="yes">Yes</td>
+            <td class="yes">Yes</td>
+            <td class="yes">Yes</td>
+          </tr>
+          <tr>
+            <td>expand-everything</td>
+            <td class="yes">Yes</td>
+            <td class="no">Broke Apr 2026</td>
+            <td class="yes">Yes</td>
+          </tr>
+          <tr>
+            <td>Refined GitHub</td>
+            <td class="no">Alt+click</td>
+            <td class="no">Alt+click</td>
+            <td class="no">Preview only</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="wrap">
+        <h2>It heals itself <span class="pill">the interesting part</span></h2>
+        <p style="color: var(--muted); max-width: 680px">
+          GitHub changes its DOM a few times a year, which breaks selector tools. Here, every
+          selector is unit-tested against a captured fixture, a daily sentinel checks live GitHub,
+          and when something drifts an AI opens a ready-to-merge fix PR. You get a live drift badge,
+          not a silently broken extension.
+        </p>
+        <div class="two">
+          <img class="shot" src="assets/panel-on-pr.png" alt="Panel on a PR" />
+          <img class="shot" src="assets/diagnostics.png" alt="Live diagnostics" />
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>Install</h2>
+        <pre><code>git clone https://github.com/DjodyKort/github-unfold
+cd github-unfold
+npm install
+npm run build
+# then load .output/chrome-mv3 via chrome://extensions → "Load unpacked"</code></pre>
+        <p style="color: var(--muted)">
+          Chrome, Edge and Firefox (WXT builds both). Web Store listing coming.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      MIT © Djody Kort ·
+      <a href="https://github.com/DjodyKort/github-unfold">Source</a> · Built to survive GitHub's
+      DOM churn.
+    </footer>
+  </body>
+</html>

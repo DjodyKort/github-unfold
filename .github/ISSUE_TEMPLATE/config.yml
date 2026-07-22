@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: How maintenance & self-healing works
+    url: https://github.com/DjodyKort/github-unfold/blob/main/MAINTENANCE.md
+    about: Selector drift is usually fixed automatically — read this first.

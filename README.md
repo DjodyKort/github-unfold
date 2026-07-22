@@ -21,6 +21,8 @@ Zero-click expander for the stuff GitHub hides on pull requests and issues —
 Working end-to-end. Zero-click expansion is verified against live GitHub PRs, and
 the self-healing sentinel runs green daily. See the [roadmap](#roadmap).
 
+![GitHub Unfold auto-expanding a live PR](docs/assets/demo.gif)
+
 The panel and live **Diagnostics**, sitting on a real PR:
 
 | Panel                                              | Diagnostics (live self-test)                    |
@@ -92,6 +94,14 @@ sentinel triggers an AI fix PR. See [`MAINTENANCE.md`](./MAINTENANCE.md).
 - [x] Phase 4 — Self-healing pipeline
 - [x] Phase 5 — Polish, packaging, docs
 - [x] Phase 6 — E2E verification
+
+## Project
+
+- [CHANGELOG](./CHANGELOG.md)
+- [Contributing](./CONTRIBUTING.md)
+- [Maintenance & self-healing](./MAINTENANCE.md)
+- [Selector map](./SELECTORS.md)
+- [Security policy](./SECURITY.md)
 
 ## License
 

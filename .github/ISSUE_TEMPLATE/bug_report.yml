@@ -1,0 +1,45 @@
+name: Bug report
+description: Something doesn't expand, or the extension misbehaves
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. If a category simply stopped expanding, it may be
+        selector drift — check the extension's **Diagnostics** tab for a red badge
+        and paste what it shows.
+  - type: input
+    id: page
+    attributes:
+      label: GitHub page
+      description: The PR/issue URL where it happened (if shareable).
+  - type: dropdown
+    id: category
+    attributes:
+      label: Which category?
+      options:
+        - Resolved conversations
+        - Outdated conversations
+        - Hidden comments
+        - Hidden items / Load more
+        - Commit lists
+        - The extension UI itself
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened vs. what you expected
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics output
+      description: From the extension panel → Diagnostics tab (target / matched / status rows).
+  - type: input
+    id: browser
+    attributes:
+      label: Browser & version
+      placeholder: e.g. Chrome 140
