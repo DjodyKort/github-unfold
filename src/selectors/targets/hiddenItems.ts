@@ -16,11 +16,23 @@ export const hiddenItemsPrTarget: Target = {
   category: 'hiddenItems',
   pages: ['pr'],
   description: 'Hidden-items / Load-more pagination on a classic PR page.',
+  networkHeavy: true,
   sampleUrl: 'https://github.com/kubernetes/kubernetes/pull/129719',
   find(root) {
-    return Array.from(
-      root.querySelectorAll('form.js-ajax-pagination .ajax-pagination-btn, .ajax-pagination-btn'),
-    ).filter((b) => !(b as HTMLButtonElement).disabled);
+    // One button per form — a form carries both "N hidden items" and
+    // "Load more…" submits, but submitting either loads the same next batch.
+    const seenForms = new Set<Element>();
+    const out: Element[] = [];
+    for (const b of root.querySelectorAll('.ajax-pagination-btn')) {
+      if ((b as HTMLButtonElement).disabled) continue;
+      const form = b.closest('form');
+      if (form) {
+        if (seenForms.has(form)) continue;
+        seenForms.add(form);
+      }
+      out.push(b);
+    }
+    return out;
   },
   isExpanded() {
     return false;
@@ -46,6 +58,7 @@ export const hiddenItemsIssueTarget: Target = {
   category: 'hiddenItems',
   pages: ['issue'],
   description: 'Hidden-items / Load-more control on the React Issue Viewer.',
+  networkHeavy: true,
   sampleUrl: 'https://github.com/rust-lang/rust/issues/20041',
   find(root) {
     const scoped = Array.from(root.querySelectorAll('[class*="LoadMore-module"] button, button[class*="LoadMore-module"]'));

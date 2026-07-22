@@ -1,25 +1,22 @@
 import { defineContentScript } from '#imports';
-import { getSettings } from '../src/settings/storage';
-import { runExpandPass } from '../src/engine';
+import { ExpandController } from '../src/engine';
 import { detectPage } from '../src/selectors/page';
 
 export default defineContentScript({
   matches: ['https://github.com/*'],
   runAt: 'document_idle',
   async main() {
-    const page = detectPage();
-    if (!page) return;
+    // The controller re-checks the page on every SPA navigation, so we start it
+    // even when the first-loaded URL isn't a PR/issue.
+    const controller = await ExpandController.create({
+      onExpanded(result, page) {
+        console.info('[github-unfold] expanded', result.expanded, 'on', page, result.byCategory);
+      },
+    });
+    controller.start();
 
-    const settings = await getSettings();
-    console.info('[github-unfold] loaded on', page, 'page; auto:', settings.autoExpand);
-
-    // Phase 2 replaces this one-shot pass with the full MutationObserver +
-    // SPA-navigation engine. For now it proves the settings → engine wiring.
-    if (settings.autoExpand) {
-      const result = await runExpandPass(document, settings);
-      if (result.expanded > 0) {
-        console.info('[github-unfold] expanded', result.expanded, result.byCategory);
-      }
+    if (detectPage()) {
+      console.info('[github-unfold] active on', detectPage(), 'page');
     }
   },
 });

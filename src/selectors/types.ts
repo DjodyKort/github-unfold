@@ -19,6 +19,11 @@ export interface Target {
   /** Human description — also fed to the AI fixer when a selector drifts. */
   description: string;
   /**
+   * Whether expanding fires a real network request (Load-more pagination,
+   * oversized diffs). The engine rate-limits these to stay polite to GitHub.
+   */
+  networkHeavy?: boolean;
+  /**
    * A link to a public GitHub page known to contain this target. Used by the
    * sentinel to load real DOM and by contributors to eyeball the markup.
    */
