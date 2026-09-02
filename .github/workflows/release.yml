@@ -21,7 +21,7 @@ jobs:
       - run: npm run zip
       - run: npm run zip -- -b firefox
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: .output/*.zip
           generate_release_notes: true
